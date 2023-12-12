@@ -32,3 +32,13 @@
   color: var(--color-light--1);
   margin-bottom: 2.5rem;
 }
+
+a.ctaLink:link,
+a.ctaLink:visited {
+  background-color: var(--color-brand--2);
+  color: var(--color-dark--0);
+  padding: 0.8rem 2rem;
+  border-radius: 7px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
