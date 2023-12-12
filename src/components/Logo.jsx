@@ -1,7 +1,9 @@
+import { NavLink } from "react-router-dom";
 import styles from "./Logo.module.css";
 
 function Logo() {
-  return <img src="/assets/logo.png" alt="WorldWise logo" className={styles.logo} />;
+  return <NavLink to='/'><img src="/assets/logo.png" alt="WorldWise logo" className={styles.logo} /></NavLink>
+  
 }
 
 export default Logo;
