@@ -12,38 +12,43 @@ import Form from "./components/Form";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [cities, setCities] = useState([])
-  const [isLoading, setIsLoading]= useState(false)
+  const [cities, setCities] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(()=> {
-    async function fetchCities () {
-      const res = await fetch('http://localhost:8000/cities')
-      const cities = await res.json()
-      console.log(cities);
-      setCities(cities)
+  useEffect(() => {
+    async function fetchCities() {
+      try {
+        setIsLoading(true)
+        const res = await fetch("http://localhost:8000/cities");
+        const cities = await res.json();
+        console.log(cities);
+        setCities(cities);
+      } catch (error) {
+        setIsLoading(false)
+        throw new Error(error)
+      } finally {
+        setIsLoading(false)
+      }
     }
-    fetchCities ()
-
-  }, [])
-
+    fetchCities();
+  }, []);
 
   return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="app" element={<AppLayout/>} > 
-            <Route index element={<CountryList />}/>
-            <Route path="cities" element={<CityList cities={cities} />}/>
-            <Route path="countries" element={<CountryList />}/>
-            <Route path="form" element={<Form />}/>
-          </Route>
-          <Route path="product" element={<Product />} />
-          <Route path="login" element={<Login />} />
-          <Route path="pricing" element={<Pricing />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-   
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="app" element={<AppLayout />}>
+          <Route index element={<CountryList />} />
+          <Route path="cities" element={<CityList isLoading={isLoading} cities={cities} />} />
+          <Route path="countries" element={<CountryList />} />
+          <Route path="form" element={<Form />} />
+        </Route>
+        <Route path="product" element={<Product />} />
+        <Route path="login" element={<Login />} />
+        <Route path="pricing" element={<Pricing />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
