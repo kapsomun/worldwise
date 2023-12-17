@@ -1,5 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+
 import "./App.css";
+
 import Product from "./pages/Product";
 import Login from "./pages/Login";
 import Pricing from "./pages/Pricing";
@@ -9,7 +13,7 @@ import AppLayout from "./pages/AppLayout";
 import CityList from "./components/CityList";
 import CountryList from "./components/CountryList";
 import Form from "./components/Form";
-import { useEffect, useState } from "react";
+import City from "./components/City";
 
 function App() {
   const [cities, setCities] = useState([]);
@@ -18,16 +22,16 @@ function App() {
   useEffect(() => {
     async function fetchCities() {
       try {
-        setIsLoading(true)
+        setIsLoading(true);
         const res = await fetch("http://localhost:8000/cities");
         const cities = await res.json();
         console.log(cities);
         setCities(cities);
       } catch (error) {
-        setIsLoading(false)
-        throw new Error(error)
+        setIsLoading(false);
+        throw new Error(error);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     }
     fetchCities();
@@ -38,10 +42,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="app" element={<AppLayout />}>
-          <Route index element={<CountryList />} />
-          <Route path="cities" element={<CityList isLoading={isLoading} cities={cities} />} />
-          <Route path="countries" element={<CountryList />} />
+          <Route index element={<CityList isLoading={isLoading} cities={cities} />} />
+          <Route
+            path="cities"
+            element={<CityList isLoading={isLoading} cities={cities} />}
+          />
+          <Route
+            path="countries"
+            element={<CountryList isLoading={isLoading} cities={cities} />}
+          />
           <Route path="form" element={<Form />} />
+          <Route path="cities/:id" element={<City />} />
         </Route>
         <Route path="product" element={<Product />} />
         <Route path="login" element={<Login />} />

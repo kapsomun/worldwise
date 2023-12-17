@@ -11,7 +11,7 @@ const formatDate = (date) =>
 
 function City({currentCity}) {
   // TEMP DATA
-
+ 
   const { cityName, emoji, date, notes } = currentCity;
 
   return (

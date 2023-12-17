@@ -5,7 +5,7 @@ import CityItem from "./CityItem";
 import Spinner from "./Spinner";
 import Message from "./Message";
 
-function CityList({ cities, isLoading }) {
+function CityList({ cities , isLoading }) {
   if (isLoading) return <Spinner />;
 
   if (!cities.length)

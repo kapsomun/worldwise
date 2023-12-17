@@ -5,8 +5,22 @@ import CountryItem from "./CountryItem";
 import Spinner from "./Spinner";
 import Message from "./Message";
 
-function CountryList({ countries, isLoading }) {
+function CountryList({ cities, isLoading }) {
   if (isLoading) return <Spinner />;
+
+  const countries = cities.reduce((arr, city) => {
+    if (!arr.map((city) => city.country).includes(city.country)) {
+      return [
+        ...arr,
+        {
+          country: city.country,
+          emoji: city.emoji,
+          date: city.date,
+          id: city.id,
+        },
+      ];
+    } else return arr;
+  }, []);
 
   if (!countries.length)
     return (
